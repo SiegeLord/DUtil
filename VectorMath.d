@@ -39,6 +39,7 @@ freely, subject to the following restrictions:
  * // Not OK
  * vec - 1;
  * vec / 2;
+ * ---
  */
 
 module VectorMath;
