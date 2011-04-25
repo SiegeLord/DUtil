@@ -42,7 +42,7 @@ freely, subject to the following restrictions:
  * ---
  */
 
-module VectorMath;
+module dutil.VectorMath;
 
 import math = tango.math.Math;
 

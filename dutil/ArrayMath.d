@@ -27,7 +27,7 @@ freely, subject to the following restrictions:
  * A set of functions that work on arrays.
  */
 
-module ArrayMath;
+module dutil.ArrayMath;
 
 import math = tango.math.Math;
 
