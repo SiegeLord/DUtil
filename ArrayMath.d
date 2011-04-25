@@ -125,6 +125,29 @@ mixin(reduce_fun!("max", "math.max!(T, T)"));
 mixin(reduce_fun!("sum", "sum_f!(T)"));
 mixin(reduce_fun!("product", "product_f!(T)"));
 
+T dot(T)(T[] arr1, T[] arr2)
+{
+	T ret = cast(T)0;
+	foreach(idx, v1; arr1)
+		ret += v1 * arr2[idx];
+
+	return ret;
+}
+
+T mag_squared(T)(T[] arr)
+{
+	T ret = cast(T)0;
+	foreach(v; arr)
+		ret += v * v;
+
+	return ret;
+}
+
+T mag(T)(T[] arr)
+{
+	return math.sqrt(mag_squared(arr));
+}
+
 private T diff_f(T)(T a, T b)
 {
 	return b - a;
