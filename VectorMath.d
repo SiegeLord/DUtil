@@ -248,23 +248,35 @@ struct Vector(T)
 		}
 	}
 	
-	Vector opAssign(ValT)(ValT other)
+	template opOpAssignStr(char[] op, char[] name)
 	{
-		static if(ArrayType!(ValT))
+		const char[] opOpAssignStr = 
+		`
+		Vector op` ~ name ~ `Assign(ValT)(ValT other)
 		{
-			assert(length == other.length, "Incompatible vector lengths.");
-			foreach(idx, ref val; Data)
+			static if(ArrayType!(ValT))
 			{
-				val = other[idx];
+				assert(length == other.length, "Incompatible vector lengths.");
+				foreach(idx, ref val; Data)
+				{
+					val ` ~ op ~ `= other[idx];
+				}
 			}
+			else
+			{
+				Data[] ` ~ op ~ `= other;
+			}
+			
+			return *this;
 		}
-		else
-		{
-			Data[] = other;
-		}
-		
-		return *this;
+		`;
 	}
+	
+	mixin(opOpAssignStr!("", ""));
+	mixin(opOpAssignStr!("+", "Add"));
+	mixin(opOpAssignStr!("-", "Sub"));
+	mixin(opOpAssignStr!("/", "Div"));
+	mixin(opOpAssignStr!("*", "Mul"));
 	
 	size_t length()
 	{
