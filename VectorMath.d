@@ -232,6 +232,22 @@ struct Vector(T)
 		return Data[idx] = val;
 	}
 	
+	void opSliceAssign(ValT)(ValT other, size_t i, size_t j)
+	{
+		static if(ArrayType!(ValT))
+		{
+			assert(j - i == other.length, "Incompatible vector lengths.");
+			foreach(idx, ref val; Data[i..j])
+			{
+				val = other[idx];
+			}
+		}
+		else
+		{
+			Data[i..j] = other;
+		}
+	}
+	
 	Vector opAssign(ValT)(ValT other)
 	{
 		static if(ArrayType!(ValT))
