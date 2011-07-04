@@ -163,7 +163,7 @@ T mean(T)(T[] arr)
 
 T std(T)(T[] arr)
 {
-	assert(arr.length > 1);
+	assert(arr.length > 1, "std(): Array needs to have at least 2 elements.");
 	T a = 0;
 	T m = arr.mean();
 	foreach(elem; arr)
@@ -175,7 +175,7 @@ T std(T)(T[] arr)
 
 T kurtosis(T)(T[] arr)
 {
-	assert(arr.length > 1);
+	assert(arr.length > 1, "kurtosis(): Array needs to have at least 2 elements.");
 	T s2 = 0;
 	T s4 = 0;
 	T m = arr.mean();
