@@ -105,6 +105,32 @@ mixin(map_fun!("abs", "math.abs"));
 mixin(map_fun!("sqrt", "math.sqrt"));
 mixin(map_fun!("exp", "math.exp"));
 
+T[] convolve(T)(T[] arr, T[] filter, T[] ret = null)
+{
+	assert(filter.length > 0, "Must have a non-empty filter");
+	assert(arr.length >= filter.length, "Array length must be greater than the filter length");
+	
+	ret.length = arr.length - filter.length + 1;
+		
+	foreach(r_idx, ref r; ret)
+	{
+		r = 0;
+		foreach(f_idx, f; filter)
+		{
+			r += f * arr[r_idx + f_idx];
+		}
+	}
+	
+	return ret;
+}
+
+T[] running_average(T)(T[] arr, size_t run_length, T[] ret = null)
+{
+	scope T[] filter = new T[](run_length);
+	filter[] = cast(T)(1.0 / run_length);
+	return convolve(arr, filter, ret);
+}
+
 T[] pow(T)(T[] arr, T power, T[] ret = null)
 {
 	return map!((T a) {return math.pow(a, power);})(arr, ret);
