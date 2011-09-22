@@ -21,6 +21,8 @@ freely, subject to the following restrictions:
    distribution.
 */
 
+module dutil.Disposable;
+
 version(DebugDisposable) import tango.stdc.stdio;
 
 /**
