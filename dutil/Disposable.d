@@ -65,9 +65,16 @@ version(DebugDisposable)
 	static ~this()
 	{
 		printf("Disposable classes instance counts:\n");
+		bool any = false;
 		foreach(name, num; InstanceCounts)
 		{
-			printf("%s: %d\n", (name ~ "\0").ptr, num);
+			if(num)
+			{
+				printf("%s: \033[1;31m%d\033[0m\n", (name ~ "\0").ptr, num);
+				any = true;
+			}
 		}
+		if(!any)
+			printf("No leaked instances!");
 	}
 }
