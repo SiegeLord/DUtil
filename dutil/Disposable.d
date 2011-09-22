@@ -75,6 +75,6 @@ version(DebugDisposable)
 			}
 		}
 		if(!any)
-			printf("No leaked instances!");
+			printf("No leaked instances!\n");
 	}
 }
