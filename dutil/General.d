@@ -35,7 +35,7 @@ import tango.io.Stdout;
 import tango.stdc.stringz;
 
 private char[] c_str_buf;
-char* c_str(const(char)[] dstr)
+const(char)* c_str(const(char)[] dstr)
 {
 	if(dstr.length >= c_str_buf.length)
 		c_str_buf.length = dstr.length + 1;
@@ -56,14 +56,14 @@ T[] deep_dup(T)(T[] arr)
 	return ret;
 }
 
-range_fruct!(T) range(T)(T end)
+range_fruct!(T) range(T)(const(T) end)
 {
 	range_fruct!(T) ret;
 	ret.end = end;
 	return ret;
 }
 
-range_fruct!(T) range(T)(T start, T end)
+range_fruct!(T) range(T)(const(T) start, const(T) end)
 {
 	range_fruct!(T) ret;
 	ret.start = start;
@@ -71,7 +71,7 @@ range_fruct!(T) range(T)(T start, T end)
 	return ret;
 }
 
-range_fruct!(T) range(T)(T start, T end, T step)
+range_fruct!(T) range(T)(const(T) start, const(T) end, const(T) step)
 {
 	range_fruct!(T) ret;
 	ret.start = start;
