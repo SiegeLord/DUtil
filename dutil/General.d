@@ -34,7 +34,7 @@ import tango.io.stream.Text;
 import tango.io.Stdout;
 import tango.stdc.stringz;
 
-private char[] c_str_buf;
+private __gshared char[] c_str_buf;
 const(char)* c_str(const(char)[] dstr)
 {
 	if(dstr.length >= c_str_buf.length)
@@ -115,6 +115,7 @@ const(char)[] GetGitRevisionHash()
 	return ret;
 }
 
+@property
 const(char)[] Prop(const(char)[] type, const(char)[] name, const(char)[] get_attr = "", const(char)[] set_attr = "")()
 {
 	return
