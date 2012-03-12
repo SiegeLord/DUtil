@@ -34,8 +34,8 @@ import tango.io.stream.Text;
 import tango.io.Stdout;
 import tango.stdc.stringz;
 
-private char[] c_str_buf;
-char* c_str(char[] dstr)
+private __gshared char[] c_str_buf;
+const(char)* c_str(const(char)[] dstr)
 {
 	if(dstr.length >= c_str_buf.length)
 		c_str_buf.length = dstr.length + 1;
@@ -56,14 +56,14 @@ T[] deep_dup(T)(T[] arr)
 	return ret;
 }
 
-range_fruct!(T) range(T)(T end)
+range_fruct!(T) range(T)(const(T) end)
 {
 	range_fruct!(T) ret;
 	ret.end = end;
 	return ret;
 }
 
-range_fruct!(T) range(T)(T start, T end)
+range_fruct!(T) range(T)(const(T) start, const(T) end)
 {
 	range_fruct!(T) ret;
 	ret.start = start;
@@ -71,7 +71,7 @@ range_fruct!(T) range(T)(T start, T end)
 	return ret;
 }
 
-range_fruct!(T) range(T)(T start, T end, T step)
+range_fruct!(T) range(T)(const(T) start, const(T) end, const(T) step)
 {
 	range_fruct!(T) ret;
 	ret.start = start;
@@ -82,7 +82,7 @@ range_fruct!(T) range(T)(T start, T end, T step)
 
 struct range_fruct(T)
 {	
-	int opApply(int delegate(ref T ii) dg)
+	int opApply(scope int delegate(ref T ii) dg)
 	{
 		for(T ii = start; ii < end; ii += step)
 		{
@@ -97,9 +97,9 @@ struct range_fruct(T)
 	T step = 1;
 }
 
-char[] GetGitRevisionHash()
+const(char)[] GetGitRevisionHash()
 {
-	char[] ret;
+	const(char)[] ret;
 	try
 	{
 		auto git = new Process(true, "git rev-parse HEAD");
@@ -115,16 +115,17 @@ char[] GetGitRevisionHash()
 	return ret;
 }
 
-char[] Prop(char[] type, char[] name, char[] get_attr = "", char[] set_attr = "")()
+@property
+const(char)[] Prop(const(char)[] type, const(char)[] name, const(char)[] get_attr = "", const(char)[] set_attr = "")()
 {
 	return
-	get_attr ~ "
+	"@property " ~ get_attr ~ "
 	" ~ type ~ " " ~ name ~ "()
 	{
 		return " ~ name ~ "Val;
 	}
 	
-	" ~ set_attr ~ "
+	@property " ~ set_attr ~ "
 	void " ~ name ~ "(" ~ type ~ " val)
 	{
 		" ~ name ~ "Val = val;

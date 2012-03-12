@@ -72,27 +72,27 @@ T[] map(alias func, T)(T[] arr, T[] ret = null)
 	return ret;
 }
 
-private template map_fun(char[] ar_fun_name, char[] fun_name)
+private template map_fun(const(char)[] ar_fun_name, const(char)[] fun_name)
 {
-	const char[] map_fun = 
+	enum map_fun = 
 "T[] " ~ ar_fun_name ~ "(T)(T[] arr, T[] ret = null)
 {
 	return map!(" ~ fun_name ~ ")(arr, ret);
 }";
 }
 
-private template reduce_fun(char[] ar_fun_name, char[] fun_name)
+private template reduce_fun(const(char)[] ar_fun_name, const(char)[] fun_name)
 {
-	const char[] reduce_fun = 
+	enum reduce_fun = 
 "T " ~ ar_fun_name ~ "(T)(T[] arr)
 {
 	return reduce!(" ~ fun_name ~ ")(arr);
 }";
 }
 
-private template zip_fun(char[] ar_fun_name, char[] fun_name)
+private template zip_fun(const(char)[] ar_fun_name, const(char)[] fun_name)
 {
-	const char[] zip_fun = 
+	enum zip_fun = 
 "T[] " ~ ar_fun_name ~ "(T)(T[] arr, T[] ret = null)
 {
 	return zip!(" ~ fun_name ~ ")(arr, ret);
