@@ -52,8 +52,7 @@ T[] zip(alias func, T)(T[] arr, T[] ret = null)
 
 T reduce(alias func, T)(T[] arr)
 {
-	assert(arr.length);
-	T ret = arr[0];
+	auto ret = arr[0];
 	foreach(elem; arr[1..$])
 		ret = cast(T)func(ret, elem);
 	return ret;
@@ -183,13 +182,14 @@ mixin(zip_fun!("diff", "diff_f!(T)"));
 
 T mean(T)(T[] arr)
 {
+	assert(arr.length > 0, "Trying to compute the mean of an empty array.");
 	auto s = arr.sum();
 	return s / arr.length;
 }
 
 T std(T)(T[] arr)
 {
-	assert(arr.length > 1, "std(): Array needs to have at least 2 elements.");
+	assert(arr.length > 0, "Trying to compute the std of an empty array.");
 	T a = 0;
 	T m = arr.mean();
 	foreach(elem; arr)
@@ -201,7 +201,7 @@ T std(T)(T[] arr)
 
 T kurtosis(T)(T[] arr)
 {
-	assert(arr.length > 1, "kurtosis(): Array needs to have at least 2 elements.");
+	assert(arr.length > 0, "Trying to compute the kurtosis of an empty array.");
 	T s2 = 0;
 	T s4 = 0;
 	T m = arr.mean();
